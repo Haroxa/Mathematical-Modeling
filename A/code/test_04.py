@@ -11,25 +11,45 @@ color_min = [ 0,26,35,100]
 color_max = [10,34,77,124]
 color_str = ["red","yellow","green","blue"]
 
-for i in range (len(color_min)):
-    low_hsv = np.array([color_min[i], 0, 221])
-    high_hsv = np.array([color_max[i], 255, 255])
+for index in range (len(color_min)):
+    print("i:",index," min: ",color_min[index]," max: ",color_max[index]," str: ",color_str[index])
+    low_hsv = np.array([color_min[index], 43, 46])
+    high_hsv = np.array([color_max[index], 255, 255])
     mask = cv2.inRange(hsv, lowerb=low_hsv, upperb=high_hsv)
 
-    # print(len(mask))
-    # print(len(mask[0]))
+    # 创建掩码的反向图像
+    mask_inv = cv2.bitwise_not(mask)
+
+    # 获取掩码区域和非掩码区域的像素
+    # mask_pixels = cv2.bitwise_and(img, img, mask=mask)
+    # inv_pixels = cv2.bitwise_and(img, img, mask=mask_inv)
+
+    # 修复掩码区域的像素
+    # output_img = cv2.inpaint(mask_pixels, mask, 3, cv2.INPAINT_TELEA)
+    # output_img = cv2.inpaint(inv_pixels, mask, 3, cv2.INPAINT_TELEA)
+
+    # 合并修复后的像素和未修复的像素
+    # output_img = inv_pixels #cv2.add(output_img, inv_pixels)
+    output_img = mask_inv
+    # 显示修复后的图片
+    cv2.imshow('Output Image', output_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    print(len(output_img))
+    print(len(output_img[0]))
 
     list_y = []
     list_x = []
 
-    for i in range(len(mask)):
-        # print(mask[i])
+    for i in range(len(output_img)):
+        # print(output_img[i])
         xmax = []
-        for j in range(len(mask[i])):
-            if mask[i][j] == 0:
-                # print(mask[i][j],j,i)
+        for j in range(len(output_img[i])):
+            if output_img[i][j] == 0:
+                # print(output_img[i][j],j,i)
                 list_x.append(j)
-                list_y.append(len(mask)-i)
+                list_y.append(len(output_img)-i)
 
     plt.plot(list_x, list_y, 'o', color='r')
     plt.show()
@@ -50,4 +70,4 @@ for i in range (len(color_min)):
         ws.write(j, 1, y)
         j += 1
 
-    wb.save('../table/color/'+color_str[i]+'.xls')
+    wb.save('../table/color/'+color_str[index]+'.xls')
