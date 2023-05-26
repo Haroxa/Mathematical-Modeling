@@ -1,3 +1,5 @@
+# 总坐标提取
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt

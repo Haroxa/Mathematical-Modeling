@@ -1,3 +1,5 @@
+# 颜色提取图-黑白
+
 import cv2
 import numpy as np
 src = cv2.imread("../image/read_02.jpg")

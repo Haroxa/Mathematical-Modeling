@@ -1,7 +1,12 @@
+# 各个颜色坐标点
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import xlwt
+
+# 颜色处理，hsv查找 https://blog.csdn.net/qq_40456669/article/details/93375709
+# 核心代码 https://blog.csdn.net/qq_45882682/article/details/123115247
 
 # 需要先进入到 code目录下再运行，才不会报错
 img = cv2.imread('../image/read_02.jpg')
